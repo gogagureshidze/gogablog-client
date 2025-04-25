@@ -34,7 +34,7 @@ function ResetPassword() {
     const validateToken = async () => {
       try {
         const response = await axios.post(
-          "/api/user/validate",
+          "https://gogablog-api.onrender.com/api/user/validate",
           {
             token,
           }

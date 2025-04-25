@@ -15,7 +15,7 @@ function PostPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/post/${id}`)
+    fetch(`https://gogablog-api.onrender.com/api/post/${id}`)
       .then((response) => response.json())
       .then((postInfo) => {
         setPostInfo(postInfo);

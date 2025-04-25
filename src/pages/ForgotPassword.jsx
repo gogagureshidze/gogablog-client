@@ -29,7 +29,10 @@ const handleReset = async (e) => {
   setLoading(true);
 
   try {
-    const response = await axios.post("/api/user/forgotPassword", { email });
+    const response = await axios.post(
+      "https://gogablog-api.onrender.com/api/user/forgotPassword",
+      { email }
+    );
 
     if (response.status === 200) {
       console.log("Link sent!");

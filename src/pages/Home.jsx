@@ -9,7 +9,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/post")
+    fetch("https://gogablog-api.onrender.com/api/post")
       .then((response) => response.json())
       .then((posts) => {
         setPosts(posts);

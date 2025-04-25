@@ -59,14 +59,17 @@ function EditPost() {
       data.append("file", file);
     }
 
-    const response = await fetch("/api/post/", {
-      method: "PUT",
-      body: data,
-      credentials: "include",
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    });
+    const response = await fetch(
+      "https://gogablog-api.onrender.com/api/post/",
+      {
+        method: "PUT",
+        body: data,
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
 
     if (response.ok) {
       setCircularLoading(false);

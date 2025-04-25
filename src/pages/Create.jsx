@@ -29,7 +29,7 @@ export default function CreatePost() {
     data.set("content", content);
     data.set("file", files[0]);
 
-    const response = await fetch("/api/post", {
+    const response = await fetch("https://gogablog-api.onrender.com/api/post", {
       method: "POST",
       body: data,
       headers: {

@@ -37,7 +37,10 @@ function Login() {
     setLoadingLogin(true);
 
     try {
-      const response = await axios.post("/api/user/login", { email, password });
+      const response = await axios.post(
+        "https://gogablog-api.onrender.com/api/user/login",
+        { email, password }
+      );
 
       if (response.status === 200) {
         localStorage.setItem("user", response.data);
