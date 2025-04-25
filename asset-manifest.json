@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/gogablog-client/static/css/main.e226fe56.css",
-    "main.js": "/gogablog-client/static/js/main.3b48118b.js",
+    "main.js": "/gogablog-client/static/js/main.53e99f98.js",
     "index.html": "/gogablog-client/index.html",
     "main.e226fe56.css.map": "/gogablog-client/static/css/main.e226fe56.css.map",
-    "main.3b48118b.js.map": "/gogablog-client/static/js/main.3b48118b.js.map"
+    "main.53e99f98.js.map": "/gogablog-client/static/js/main.53e99f98.js.map"
   },
   "entrypoints": [
     "static/css/main.e226fe56.css",
-    "static/js/main.3b48118b.js"
+    "static/js/main.53e99f98.js"
   ]
 }
