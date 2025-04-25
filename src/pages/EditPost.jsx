@@ -76,7 +76,7 @@ function EditPost() {
     if (response.ok) {
       setCircularLoading(false);
 
-      navigate("/post/" + id);
+      navigate("https://gogablog-api.onrender.com/post/" + id);
       setError("");
     } else {
       setCircularLoading(false);
