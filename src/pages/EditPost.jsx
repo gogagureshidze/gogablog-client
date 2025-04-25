@@ -76,7 +76,7 @@ function EditPost() {
     if (response.ok) {
       setCircularLoading(false);
 
-      navigate("https://gogablog-api.onrender.com/post/" + id);
+      navigate("/post/" + id);
       setError("");
     } else {
       setCircularLoading(false);
@@ -89,13 +89,16 @@ function EditPost() {
     e.preventDefault();
     setCircularLoadingDelete(true);
 
-    const response = await fetch(`/api/post/${id}`, {
-      method: "DELETE",
-      credentials: "include",
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    });
+    const response = await fetch(
+      `https://gogablog-api.onrender.com/api/post/${id}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
 
     if (response.ok) {
       setCircularLoadingDelete(false);
