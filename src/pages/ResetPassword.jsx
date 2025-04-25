@@ -68,9 +68,14 @@ function ResetPassword() {
     setLoading(true);
 
     try {
-      const response = await axios.post("/api/user/reset", {
-        password,userId, token
-      });
+      const response = await axios.post(
+        "https://gogablog-api.onrender.com/api/user/reset",
+        {
+          password,
+          userId,
+          token,
+        }
+      );
 
       if (response.status === 200) {
         alert("Password reset successful.");
