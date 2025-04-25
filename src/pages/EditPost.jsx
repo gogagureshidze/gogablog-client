@@ -26,14 +26,16 @@ function EditPost() {
 
 
   useEffect(() => {
-    fetch("/api/post/" + id).then((response) => {
-      response.json().then((postInfo) => {
-        setTitle(postInfo.title);
-        setSummary(postInfo.summary);
-        setContent(postInfo.content);
-        setLoading(false);
-      });
-    });
+    fetch("https://gogablog-api.onrender.com/api/post/" + id).then(
+      (response) => {
+        response.json().then((postInfo) => {
+          setTitle(postInfo.title);
+          setSummary(postInfo.summary);
+          setContent(postInfo.content);
+          setLoading(false);
+        });
+      }
+    );
   }, [id]);
 
   if (loading) {
