@@ -10,7 +10,7 @@ function Post({ _id, title, summary, cover, createdAt, author }) {
         <div className="image">
           <Link to={`/post/${_id}`}>
             <img
-              src={cover ? "https://gogablog-api.onrender.com/" + cover : ""}
+              src={cover ? "" + cover : ""}
               alt={title}
             />
           </Link>

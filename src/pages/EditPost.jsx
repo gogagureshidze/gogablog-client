@@ -142,6 +142,7 @@ return (
               <input
                 style={{ display: "none" }}
                 id="file-upload"
+                accept="image/*" // 👈 ADD THIS LINE
                 name="file-upload"
                 type="file"
                 onChange={(ev) => {

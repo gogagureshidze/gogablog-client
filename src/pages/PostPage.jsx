@@ -39,6 +39,7 @@ function PostPage() {
     return <div>Error loading post.</div>;
   }
 
+  console.log(postInfo)
  return (
    <div
      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
@@ -99,10 +100,8 @@ function PostPage() {
            )}
 
            <div className="image">
-             <img
-               src={`https://gogablog-api.onrender.com/${postInfo.cover}`}
-               alt=""
-             />
+             <img src={postInfo.cover} alt="Post cover" />
+
            </div>
            <div
              className="content"
