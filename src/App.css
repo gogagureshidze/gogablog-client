@@ -38,6 +38,34 @@ body {
      width: 8px;
 }
 
+.content {
+     /* Ensure content is responsive */
+     width: 100%;
+     max-width: 100%;
+     overflow-wrap: break-word;
+     /* This ensures long words or URLs don't break the layout */
+     box-sizing: border-box;
+     /* Prevent padding/margin from causing overflow */
+}
+
+.content img {
+     max-width: 100%;
+     height: auto;
+}
+
+.content iframe {
+     max-width: 100%;
+     height: auto;
+}
+
+/* Optional: Media queries to handle specific responsiveness */
+@media screen and (max-width: 768px) {
+     .content {
+          padding: 10px;
+          /* Adjust padding for smaller screens */
+     }
+}
+
 ::-webkit-scrollbar-thumb {
      background-color: #888;
      border-radius: 4px;
