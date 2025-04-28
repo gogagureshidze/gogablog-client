@@ -17,7 +17,7 @@ import {
 import { TiDelete, TiEdit } from "react-icons/ti";
 import { MdSave, MdCancel } from "react-icons/md";
 import { LoadingScreen } from "../components/LoadingScreen";
-
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 function PostPage() {
   const { id } = useParams();
   const { userInfo } = useContext(UserContext);
@@ -253,7 +253,7 @@ function PostPage() {
                               {deletingCommentLoadingId === comment._id ? (
                                 <CircularProgress size={20} />
                               ) : (
-                                <TiDelete />
+                                <DeleteForeverIcon />
                               )}
                             </IconButton>
                           </Box>

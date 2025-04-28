@@ -21,6 +21,17 @@ body {
      line-height: 1.6;
 }
 
+/* App.css */
+.fade-in-container {
+  min-height: 100vh;
+  opacity: 0; 
+  transition: opacity 0.9s ease-in-out; 
+}
+
+.fade-in-container.loaded {
+  opacity: 1; /* Fade in when the 'loaded' class is applied */
+}
+
 /* Scrollbar Customization */
 ::-webkit-scrollbar {
      width: 8px;
