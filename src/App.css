@@ -13,6 +13,32 @@ body {
      font-family: monospace;
 }
 
+/* Global Styles */
+body {
+     font-family: 'Roboto', sans-serif;
+     background-color: #f4f6f9;
+     color: #333;
+     line-height: 1.6;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+     width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+     background-color: #888;
+     border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+     background-color: #555;
+}
+
+::-webkit-scrollbar-track {
+     background: #f1f1f1;
+}
+
 /* App container to hold everything */
 #root {
      display: flex;
@@ -23,17 +49,9 @@ body {
 /* Main content grows to push footer to bottom */
 .page-content {
      flex: 1;
-}
-
-img {
-     max-width: 100%;
-     display: block;
-}
-
-a {
-     cursor: pointer;
-     text-decoration: none;
-     color: inherit;
+     padding: 20px;
+     max-width: 1200px;
+     margin: 0 auto;
 }
 
 /* LAYOUT */
@@ -97,7 +115,6 @@ div.post {
      grid-template-columns: 1fr;
      gap: 50px;
      align-items: center;
-
 }
 
 .post-wrapper {
@@ -222,7 +239,6 @@ div.post-page a {
      text-decoration: underline;
 }
 
-
 div.post-page-container {
      max-width: 1000px;
      margin: auto;
@@ -340,7 +356,6 @@ form span.delete {
      opacity: 0.8;
 }
 
-
 .loading-container {
      position: fixed;
      inset: 0;
@@ -401,44 +416,51 @@ form span.delete {
      }
 }
 
-.ql-editor {
-     overflow: auto !important;
+/* Add Comment Section */
+.add-comment {
+     display: flex;
+     flex-direction: column;
+     gap: 15px;
+     margin-top: 30px;
 }
 
-.file-upload {
-     position: relative;
-     display: inline-block;
-}
-
-.file-upload label {
-     background-color: #e63946;
-     color: white;
-     padding: 10px 20px;
+.add-comment textarea {
+     font-size: 1rem;
+     padding: 12px;
+     border: 1px solid #ccc;
      border-radius: 8px;
-     font-weight: bold;
+     resize: vertical;
+}
+
+.add-comment button {
+     padding: 12px;
+     background-color: #facc15;
+     color: #14274E;
+     border: none;
+     border-radius: 8px;
      cursor: pointer;
      transition: background-color 0.3s ease;
-     display: inline-block;
 }
 
-.file-upload label:hover {
-     background-color: #b81e2e;
-     /* darker red on hover */
+.add-comment button:hover {
+     background-color: #fbbf24;
 }
 
-.file-upload input[type="file"] {
-     display: none;
+.comment {
+     border-bottom: 1px solid #ddd;
+     padding: 12px 0;
 }
 
-.fade-in-container {
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
+.comment .author {
+     font-weight: bold;
+     color: #14274E;
 }
 
-.fade-in-container.loaded {
-  opacity: 1;
+.comment p {
+     font-size: 1rem;
+     margin: 8px 0;
 }
+
 iframe#webpack-dev-server-client-overlay {
      display: none !important
 }
-
