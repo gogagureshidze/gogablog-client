@@ -172,7 +172,7 @@ function PostPage() {
         }
       );
       if (response.ok) {
-        navigate("/");
+        navigate("https://gogagureshidze.github.io/gogablog-client/#/");
       } else {
         alert("Failed to delete post.");
       }
