@@ -172,7 +172,7 @@ function PostPage() {
         }
       );
       if (response.ok) {
-        navigate("https://gogagureshidze.github.io/gogablog-client/#/");
+        navigate("/#");
       } else {
         alert("Failed to delete post.");
       }
@@ -213,7 +213,7 @@ function PostPage() {
               by {postInfo.author?.username}
             </div>
             {(userInfo?.user._id === postInfo.author._id ||
-              userInfo?.user?.username === "Nippleman") && (
+              userInfo?.user?.username === "Goga2") && (
               <div className="edit" style={{ display: "flex", gap: "10px" }}>
                 <Link to={`/edit/${postInfo._id}`}>
                   <Button
@@ -236,7 +236,7 @@ function PostPage() {
                   </Button>
                 </Link>
 
-                {userInfo?.user?.username === "Nippleman" && (
+                {userInfo?.user?.username === "Goga2" && (
                   <Button
                     variant="contained"
                     color="error"
