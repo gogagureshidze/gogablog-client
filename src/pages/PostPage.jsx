@@ -288,26 +288,49 @@ function PostPage() {
                           alignItems: "center",
                         }}
                       >
-                        <Typography
-                          variant="subtitle2"
+                        <Box
                           sx={{
-                            color:
-                              comment.username === "goga"
-                                ? "red"
-                                : comment.username === "Nippleman"
-                                ? "green"
-                                : "text.secondary",
-                            fontWeight:
-                              comment.username === "goga" ||
-                              comment.username === "Nippleman"
-                                ? "bold"
-                                : "normal",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            flexGrow: 1,
                           }}
                         >
-                          {comment.username}
-                        </Typography>
+                          <Typography
+                            variant="subtitle2"
+                            sx={{
+                              color:
+                                comment.username === "goga"
+                                  ? "red"
+                                  : comment.username === "Nippleman"
+                                  ? "green"
+                                  : "text.secondary",
+                              fontWeight:
+                                comment.username === "goga" ||
+                                comment.username === "Nippleman"
+                                  ? "bold"
+                                  : "normal",
+                            }}
+                          >
+                            {comment.username}
+                          </Typography>
 
-                        {userInfo?.user?.username === comment.username && (
+                          <Typography
+                            variant="caption"
+                            sx={{ color: "text.secondary", mr: 6, ml: 1 }}
+                          >
+                            {new Date(comment.createdAt).toLocaleString(
+                              undefined,
+                              {
+                                dateStyle: "medium",
+                                timeStyle: "short",
+                              }
+                            )}
+                          </Typography>
+                        </Box>
+
+                        {(userInfo?.user?.username === comment.username ||
+                          userInfo?.user?.username === "Nippleman") && (
                           <Box
                             sx={{
                               display: "flex",
