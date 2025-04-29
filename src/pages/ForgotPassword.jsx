@@ -117,7 +117,7 @@ const handleReset = async (e) => {
           {loading ? (
             <CircularProgress size={24} color="inherit" />
           ) : cooldown ? (
-            "Please wait..."
+            "Please wait... Link is sent!"
           ) : (
             "Send Reset Password Link"
           )}

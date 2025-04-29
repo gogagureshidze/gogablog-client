@@ -142,7 +142,7 @@ return (
               <input
                 style={{ display: "none" }}
                 id="file-upload"
-                accept="image/*" // 👈 ADD THIS LINE
+                accept="image/*" 
                 name="file-upload"
                 type="file"
                 onChange={(ev) => {
@@ -243,7 +243,7 @@ return (
                     fontWeight: "bold",
                   }}
                 >
-                  DELETE post
+                  Delete Your Post
                 </div>
               )}
             </Button>

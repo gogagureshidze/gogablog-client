@@ -14,13 +14,16 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { TiDelete, TiEdit } from "react-icons/ti";
+import {  TiEdit } from "react-icons/ti";
 import { MdSave, MdCancel } from "react-icons/md";
 import { LoadingScreen } from "../components/LoadingScreen";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 function PostPage() {
   const { id } = useParams();
   const { userInfo } = useContext(UserContext);
+
+  
+
 
   const [postInfo, setPostInfo] = useState(null);
   const [loadingPost, setLoadingPost] = useState(true); // For post loading
@@ -29,6 +32,8 @@ function PostPage() {
   const [commentText, setCommentText] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingText, setEditingText] = useState("");
+
+
 
   const [addingCommentLoading, setAddingCommentLoading] = useState(false);
   const [deletingCommentLoadingId, setDeletingCommentLoadingId] =
@@ -164,8 +169,24 @@ function PostPage() {
               {postInfo.title}
             </h1>
             <time>{formatISO9075(new Date(postInfo.createdAt))}</time>
-            <div className="author">by {postInfo.author?.username}</div>
-
+            <div
+              className="author"
+              style={{
+                color:
+                  postInfo.author?.username === "goga"
+                    ? "red"
+                    : postInfo.author?.username === "Nippleman"
+                    ? "green"
+                    : "inherit",
+                fontWeight:
+                  postInfo.author?.username === "goga" ||
+                  postInfo.author?.username === "Nippleman"
+                    ? "bold"
+                    : "normal",
+              }}
+            >
+              by {postInfo.author?.username}
+            </div>
             {userInfo?.user._id === postInfo.author._id && (
               <div className="edit">
                 <Link to={`/edit/${postInfo._id}`}>
@@ -221,7 +242,22 @@ function PostPage() {
                           alignItems: "center",
                         }}
                       >
-                        <Typography variant="subtitle2" color="text.secondary">
+                        <Typography
+                          variant="subtitle2"
+                          sx={{
+                            color:
+                              comment.username === "goga"
+                                ? "red"
+                                : comment.username === "Nippleman"
+                                ? "green"
+                                : "text.secondary",
+                            fontWeight:
+                              comment.username === "goga" ||
+                              comment.username === "Nippleman"
+                                ? "bold"
+                                : "normal",
+                          }}
+                        >
                           {comment.username}
                         </Typography>
 
