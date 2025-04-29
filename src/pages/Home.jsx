@@ -6,6 +6,9 @@ import { LoadingScreen } from "../components/LoadingScreen";
 import { Snackbar, Alert } from "@mui/material";
 import { UserContext } from "../context/userContext";
 
+// Module-level flag: resets on full page reload, persists in navigation
+let hasShownAdminWelcome = false;
+
 function Home() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,17 +16,17 @@ function Home() {
   const [username, setUsername] = useState("");
   const { userInfo } = useContext(UserContext);
 
-  console.log(userInfo);
   useEffect(() => {
     try {
-      if (userInfo.user.isAdmin === true) {
+      if (userInfo.user.isAdmin && !hasShownAdminWelcome) {
         setUsername(userInfo.user.username);
         setShowAdminWelcome(true);
+        hasShownAdminWelcome = true; // Prevent future popups until next full reload
       }
     } catch (error) {
-      console.error("Error parsing user data from localStorage:", error);
+      console.error("Error reading user data:", error);
     }
-  }, []);
+  }, [userInfo]);
 
   useEffect(() => {
     fetch("https://gogablog-api.onrender.com/api/post")
@@ -69,7 +72,7 @@ function Home() {
 
       <Snackbar
         open={showAdminWelcome}
-        autoHideDuration={4000}
+        autoHideDuration={6000}
         onClose={() => setShowAdminWelcome(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -78,7 +81,7 @@ function Home() {
           severity="info"
           sx={{ width: "100%" }}
         >
-          Welcome Mr. Admin, {username}!
+          Welcome Mr. Admin, {username}! ;)
         </Alert>
       </Snackbar>
     </div>
