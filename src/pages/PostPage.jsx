@@ -164,10 +164,13 @@ function PostPage() {
         {
           method: "DELETE",
           credentials: "include",
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
         }
       );
       if (response.ok) {
-        window.location.href = "/"; // redirect to home after deletion
+        window.location.href = "/";
       } else {
         alert("Failed to delete post.");
       }
@@ -238,6 +241,7 @@ function PostPage() {
                     size="large"
                     onClick={handleDeletePost}
                     sx={{
+                      maxWidth: "200px",
                       backgroundColor: "#B91C1C",
                       "&:hover": {
                         backgroundColor: "#7F1D1D",
