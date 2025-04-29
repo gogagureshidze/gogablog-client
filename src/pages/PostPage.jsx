@@ -213,7 +213,7 @@ function PostPage() {
               by {postInfo.author?.username}
             </div>
             {(userInfo?.user._id === postInfo.author._id ||
-              userInfo?.user?.username === "Goga2") && (
+              userInfo?.user?.username === "Nippleman") && (
               <div className="edit" style={{ display: "flex", gap: "10px" }}>
                 <Link to={`/edit/${postInfo._id}`}>
                   <Button
@@ -236,7 +236,7 @@ function PostPage() {
                   </Button>
                 </Link>
 
-                {userInfo?.user?.username === "Goga2" && (
+                {userInfo?.user?.username === "Nippleman" && (
                   <Button
                     variant="contained"
                     color="error"
