@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { formatISO9075 } from "date-fns";
 import { UserContext } from "../context/userContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+
 import {
   Button,
   CircularProgress,
@@ -21,7 +22,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 function PostPage() {
   const { id } = useParams();
   const { userInfo } = useContext(UserContext);
-
+    const navigate = useNavigate();
+  
   const [postInfo, setPostInfo] = useState(null);
   const [loadingPost, setLoadingPost] = useState(true); // For post loading
   const [comments, setComments] = useState([]);
@@ -170,7 +172,7 @@ function PostPage() {
         }
       );
       if (response.ok) {
-        window.location.href = "/";
+        navigate("/");
       } else {
         alert("Failed to delete post.");
       }
