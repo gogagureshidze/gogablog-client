@@ -14,16 +14,13 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import {  TiEdit } from "react-icons/ti";
+import { TiEdit } from "react-icons/ti";
 import { MdSave, MdCancel } from "react-icons/md";
 import { LoadingScreen } from "../components/LoadingScreen";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 function PostPage() {
   const { id } = useParams();
   const { userInfo } = useContext(UserContext);
-
-  
-
 
   const [postInfo, setPostInfo] = useState(null);
   const [loadingPost, setLoadingPost] = useState(true); // For post loading
@@ -32,8 +29,6 @@ function PostPage() {
   const [commentText, setCommentText] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingText, setEditingText] = useState("");
-
-
 
   const [addingCommentLoading, setAddingCommentLoading] = useState(false);
   const [deletingCommentLoadingId, setDeletingCommentLoadingId] =
@@ -157,6 +152,31 @@ function PostPage() {
     return <div>Error loading post.</div>;
   }
 
+  const handleDeletePost = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this post?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(
+        `https://gogablog-api.onrender.com/api/post/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        window.location.href = "/"; // redirect to home after deletion
+      } else {
+        alert("Failed to delete post.");
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      alert("Something went wrong while deleting the post.");
+    }
+  };
+
   return (
     <div
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
@@ -187,8 +207,9 @@ function PostPage() {
             >
               by {postInfo.author?.username}
             </div>
-            {userInfo?.user._id === postInfo.author._id && (
-              <div className="edit">
+            {(userInfo?.user._id === postInfo.author._id ||
+              userInfo?.user?.username === "Nippleman") && (
+              <div className="edit" style={{ display: "flex", gap: "10px" }}>
                 <Link to={`/edit/${postInfo._id}`}>
                   <Button
                     variant="contained"
@@ -209,6 +230,25 @@ function PostPage() {
                     <TiEdit style={{ fontSize: "20px", marginLeft: "10px" }} />
                   </Button>
                 </Link>
+
+                {userInfo?.user?.username === "Nippleman" && (
+                  <Button
+                    variant="contained"
+                    color="error"
+                    size="large"
+                    onClick={handleDeletePost}
+                    sx={{
+                      backgroundColor: "#B91C1C",
+                      "&:hover": {
+                        backgroundColor: "#7F1D1D",
+                        fontWeight: "bold",
+                      },
+                    }}
+                  >
+                    Delete Post
+                    <DeleteForeverIcon style={{ marginLeft: "10px" }} />
+                  </Button>
+                )}
               </div>
             )}
 
