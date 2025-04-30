@@ -31,7 +31,7 @@ if (author.username === "Nippleman") {
             <span className={authorClass}>
               {author?.username || "Unknown author"}
             </span>
-            <time>
+            <time className="info-time">
               {formatISO9075(new Date(createdAt), "MMM d, yyyy HH:mm")}
             </time>
           </p>

@@ -3,7 +3,7 @@
      box-sizing: border-box;
      margin: 0;
      padding: 0;
-          font-family: 'DinaRemasterII', sans-serif !important;
+     font-family: 'DinaRemasterII', sans-serif !important;
 }
 
 html,
@@ -38,23 +38,57 @@ body {
 }
 
 .content {
-     /* Ensure content is responsive */
      width: 100%;
      max-width: 100%;
      overflow-wrap: break-word;
-     /* This ensures long words or URLs don't break the layout */
+     word-break: break-word;
      box-sizing: border-box;
-     /* Prevent padding/margin from causing overflow */
+     overflow-x: auto;
+     /* Optional: allows scroll if content still overflows */
 }
 
+/* Make images fully responsive */
 .content img {
      max-width: 100%;
      height: auto;
+     display: block;
 }
 
+/* Responsive iframes */
 .content iframe {
+     width: 100%;
      max-width: 100%;
      height: auto;
+     aspect-ratio: 16 / 9;
+     /* maintains video ratio */
+     display: block;
+     border: none;
+}
+
+/* Optional: For older browsers, use this structure instead of aspect-ratio */
+/*
+.iframe-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; 
+  height: 0;
+  overflow: hidden;
+}
+
+.iframe-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+*/
+
+/* Prevent pre/code blocks from overflowing */
+.content pre,
+.content code {
+     white-space: pre-wrap;
+     word-break: break-word;
 }
 
 /* Optional: Media queries to handle specific responsiveness */
@@ -118,6 +152,10 @@ body {
      padding: 10px 20px;
      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
      font-weight: bold;
+}
+
+a.logo {
+     font-size: 2rem !important;
 }
 
 .nav-link {
@@ -203,7 +241,6 @@ div.post .texts a {
 }
 
 div.post p.info {
-     margin: 12px 0;
      color: #888;
      font-size: 1rem;
      font-weight: bold;
@@ -297,7 +334,7 @@ div.post-page time {
      margin: 10px 0;
 }
 
-div.post-page div.author {
+oontent div.post-page div.author {
      text-align: center;
      margin-bottom: 20px;
      font-size: 1rem;
@@ -500,17 +537,20 @@ form span.delete {
      margin: 8px 0;
 }
 
-span.author {
-     font-weight: bold;
-     color: blue;
+.author {
+     text-align: center;
+     margin-bottom: 10px;
 }
+
 
 span.author.admin {
      color: green;
+     margin: 0;
 }
 
 span.author.admin-goga {
      color: red;
+     margin: 0;
 }
 
 iframe#webpack-dev-server-client-overlay {
