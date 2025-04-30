@@ -3,6 +3,7 @@
      box-sizing: border-box;
      margin: 0;
      padding: 0;
+          font-family: 'DinaRemasterII', sans-serif !important;
 }
 
 html,
@@ -10,12 +11,10 @@ body {
      height: 100%;
      margin: 0;
      padding: 0;
-     font-family: monospace !important;
 }
 
 /* Global Styles */
 body {
-     font-family: 'Roboto', sans-serif;
      background-color: #f4f6f9;
      color: #333;
      line-height: 1.6;
@@ -500,18 +499,20 @@ form span.delete {
      font-size: 1rem;
      margin: 8px 0;
 }
+
 span.author {
      font-weight: bold;
      color: blue;
 }
 
 span.author.admin {
-     color: green ; 
+     color: green;
 }
 
 span.author.admin-goga {
-     color: red ;
+     color: red;
 }
+
 iframe#webpack-dev-server-client-overlay {
      display: none !important
 }

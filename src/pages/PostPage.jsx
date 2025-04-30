@@ -36,6 +36,8 @@ function PostPage() {
   const [deletingCommentLoadingId, setDeletingCommentLoadingId] =
     useState(null);
   const [savingCommentLoadingId, setSavingCommentLoadingId] = useState(null);
+
+  // Fetch post and comments when the component mounts or when the id changes
   useEffect(() => {
     fetchPost();
     fetchComments();
