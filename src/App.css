@@ -1,4 +1,10 @@
 /* RESET & BASE STYLES */
+@font-face {
+     font-family: 'DinaRemasterII';
+     src: url('https://raw.githubusercontent.com/zshoals/Dina-Font-TTF-Remastered/master/Fonts/DinaRemasterII.ttc') format('truetype-collection');
+     font-weight: normal;
+     font-style: normal;
+}
 * {
      box-sizing: border-box;
      margin: 0;
