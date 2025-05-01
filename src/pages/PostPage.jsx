@@ -4,6 +4,7 @@ import { formatISO9075 } from "date-fns";
 import { UserContext } from "../context/userContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { DarkModeContext } from "../context/DarkModeContext"; // adjust path if needed
 
 import {
   Button,
@@ -31,6 +32,7 @@ function PostPage() {
   const [commentText, setCommentText] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingText, setEditingText] = useState("");
+const { darkMode } = useContext(DarkModeContext);
 
   const [addingCommentLoading, setAddingCommentLoading] = useState(false);
   const [deletingCommentLoadingId, setDeletingCommentLoadingId] =
@@ -278,10 +280,21 @@ function PostPage() {
               {loadingComments ? (
                 <CircularProgress />
               ) : comments.length === 0 ? (
-                <Typography>No comments yet. Be the first!</Typography>
+                <Typography sx={{ color: darkMode ? "#aaa" : "inherit" }}>
+                  No comments yet. Be the first!
+                </Typography>
               ) : (
                 comments.map((comment) => (
-                  <Card key={comment._id} variant="outlined" sx={{ my: 4 }}>
+                  <Card
+                    key={comment._id}
+                    variant="outlined"
+                    sx={{
+                      my: 4,
+                      backgroundColor: darkMode ? "#14274E" : "#fff",
+                      color: darkMode ? "#ddd" : "#000",
+                      borderColor: darkMode ? "#444" : "rgba(0, 0, 0, 0.12)",
+                    }}
+                  >
                     <CardContent>
                       <Box
                         sx={{
@@ -319,7 +332,11 @@ function PostPage() {
 
                           <Typography
                             variant="caption"
-                            sx={{ color: "text.secondary", mr: 6, ml: 1 }}
+                            sx={{
+                              color: darkMode ? "#aaa" : "text-secondary",
+                              marginRight: "45px",
+                              marginLeft: "20px",
+                            }}
                           >
                             {new Date(comment.createdAt).toLocaleString(
                               undefined,

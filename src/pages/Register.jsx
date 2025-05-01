@@ -131,7 +131,14 @@ function Register() {
             required
             onChange={(e) => setPassword(e.target.value)}
             endAdornment={
-              <InputAdornment position="end">
+              <InputAdornment
+                sx={{
+                  backgroundColor: "#fff", // White background
+                  borderRadius: "50%", // Optional: make it circular
+                  padding: "20px", // Optional: control spacing
+                }}
+                position="end"
+              >
                 <IconButton onClick={togglePasswordVisibility} edge="end">
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
