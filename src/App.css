@@ -135,7 +135,7 @@ body.dark .ql-editor {
 }
 
 body.dark div.css-jupps9-MuiInputBase-root-MuiOutlinedInput-root {
-     background-color: white;
+     background-color: white !important;
 }
 
 body.dark div input {
