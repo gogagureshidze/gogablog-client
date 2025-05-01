@@ -6,7 +6,6 @@ import { LoadingScreen } from "../components/LoadingScreen";
 import { Snackbar, Alert } from "@mui/material";
 import { UserContext } from "../context/userContext";
 
-// Module-level flag: resets on full page reload, persists in navigation
 let hasShownAdminWelcome = false;
 
 function Home() {

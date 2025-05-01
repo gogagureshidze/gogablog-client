@@ -52,10 +52,11 @@ function Editor({ value, onChange }) {
   }, []);
 
   return (
-    <div style={{ width: "100%" }}>
+    <div className="editor" style={{ width: "100%",  }}>
       <ReactQuill
         value={value}
         onChange={onChange}
+        className="editor-quill"
         modules={modules}
         formats={formats}
         style={{

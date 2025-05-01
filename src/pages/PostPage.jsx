@@ -303,14 +303,14 @@ function PostPage() {
                             sx={{
                               color:
                                 comment.username === "goga"
-                                  ? "red"
+                                  ? "red !important"
                                   : comment.username === "Nippleman"
-                                  ? "green"
+                                  ? "green !important"
                                   : "text.secondary",
                               fontWeight:
                                 comment.username === "goga" ||
                                 comment.username === "Nippleman"
-                                  ? "bold"
+                                  ? "bold !important"
                                   : "normal",
                             }}
                           >

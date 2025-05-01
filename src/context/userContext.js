@@ -6,6 +6,8 @@ export const UserContext = createContext();
 // UserContext provider component
 export const UserProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  
 
 useEffect(() => {
   const storedUser = localStorage.getItem("user");
@@ -23,7 +25,9 @@ useEffect(() => {
 }, [userInfo]);
 
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo }}>
+    <UserContext.Provider
+      value={{ userInfo, setUserInfo, menuOpen, setMenuOpen }}
+    >
       {children}
     </UserContext.Provider>
   );

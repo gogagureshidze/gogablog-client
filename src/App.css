@@ -12,6 +12,148 @@
      font-family: 'DinaRemasterII', sans-serif !important;
 }
 
+
+
+body.dark {
+     background-color: #1c253b;
+}
+
+body.dark pre {
+     color: whitesmoke
+}
+
+body.dark h2 {
+     color: #facc15 !important;
+}
+
+body.dark p.summary {
+     color: #f4f6f9 !important;
+}
+
+body.dark div .navbar {
+     background-color: #1c253b;
+}
+
+body.dark div .footer {
+     background-color: #1c253b;
+}
+
+body.dark h1 {
+     color: #facc15 !important;
+}
+
+body.dark div.content p {
+     color: #f4f6f9 !important;
+}
+
+/* MuiCardContent-root */
+body.dark div.css-1lt5qva-MuiCardContent-root {
+     background-color: #1c253b;
+     color: #f4f6f9;
+}
+
+body.dark span.MuiTypography-caption {
+     color: #f4f6f9;
+}
+
+body.dark h6.css-1gmqoi2-MuiTypography-root {
+     color: #f4f6f9;
+}
+
+body.dark h5 {
+     color: #f4f6f9;
+}
+
+
+body.dark blockquote {
+     color: #f4f6f9 !important;
+}
+
+body.dark h3 {
+     color: #f4f6f9 !important;
+}
+
+body.dark li {
+     color: #f4f6f9 !important;
+}
+
+body.dark p.css-rizt0-MuiTypography-root {
+     color: #f4f6f9;
+}
+
+body.dark div textarea {
+     color: rgb(255, 255, 255);
+
+}
+
+body.dark h4 {
+     color: rgb(255, 255, 255) !important;
+}
+
+body.dark h6 {
+     color: rgb(255, 255, 255);
+
+}
+
+body.dark time {
+     color: rgba(255, 255, 255, 0.68) !important;
+
+}
+
+body.dark div.editor {
+     color: #f4f6f9;
+}
+
+/* Universal fix for Quill toolbar icons in dark mode */
+body.dark .ql-toolbar button svg,
+body.dark .ql-toolbar button svg *,
+body.dark .ql-toolbar .ql-stroke,
+body.dark .ql-toolbar .ql-fill,
+body.dark .ql-toolbar .ql-color-label {
+     stroke: white !important;
+     color: white !important;
+}
+
+/* Fix pickers and dropdowns */
+body.dark .ql-picker-label,
+body.dark .ql-picker-item {
+     color: white !important;
+}
+
+/* Optional: fix dropdown arrow icon */
+body.dark .ql-picker {
+     color: white !important;
+}
+
+/* Optional: fix editor and toolbar backgrounds */
+body.dark .ql-toolbar,
+body.dark .ql-container,
+body.dark .ql-editor {
+     background-color: #1a1a1a !important;
+     border-color: #333 !important;
+     color: white !important;
+}
+
+body.dark div.css-jupps9-MuiInputBase-root-MuiOutlinedInput-root {
+     background-color: white;
+}
+
+body.dark div input {
+     background-color: #e8f0fe;
+}
+
+body.dark div .mobile-menu.open {
+     background-color: #1c253b;
+     opacity: 0.9;
+}
+
+body.dark .loading-container {
+     background-color: #1c253b;
+     color: #facc15;
+}
+
+
+
 html,
 body {
      height: 100%;
@@ -25,6 +167,7 @@ body {
      color: #333;
      line-height: 1.6;
 }
+
 
 /* App.css */
 .fade-in-container {
@@ -151,17 +294,33 @@ body {
      margin: 0 auto;
 }
 
-/* NAVBAR */
+/*nav */
+
 .navbar {
      background-color: #14274E;
      color: #fff;
      padding: 10px 20px;
      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
      font-weight: bold;
+     z-index: 1000;
+     position: relative;
+}
+
+.navbar-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+     max-width: 1200;
+     margin: 0 auto;
+     padding: 0 20px;
+     box-sizing: border-box;
 }
 
 a.logo {
-     font-size: 1.5rem !important;
+     font-size: 1.5rem;
+     color: white;
+     text-decoration: none;
 }
 
 .nav-link {
@@ -176,20 +335,33 @@ a.logo {
      transform: translateY(1px);
 }
 
-header {
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-}
-
-header a.logo {
-     font-weight: bold;
-     font-size: 1.5rem;
-}
-
 header nav {
      display: flex;
      gap: 24px;
+}
+
+/* Hamburger button (hidden on desktop) */
+/* HAMBURGER STYLING */
+.hamburger {
+     background: none;
+     border: none;
+     width: 0;
+     font-size: 2rem;
+     color: white;
+     cursor: pointer;
+     display: none;
+     margin-right: 15px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+     header nav {
+          display: none;
+     }
+
+     .hamburger {
+          display: block;
+     }
 }
 
 /* POSTS */
@@ -438,6 +610,7 @@ form span.delete {
      opacity: 0.8;
 }
 
+
 .loading-container {
      position: fixed;
      inset: 0;
@@ -550,13 +723,79 @@ form span.delete {
 
 
 span.author.admin {
-     color: green;
+     color: green !important;
      margin: 0;
 }
 
 span.author.admin-goga {
-     color: red;
+     color: red !important;
      margin: 0;
+}
+
+/* MOBILE MENU */
+.mobile-menu {
+     position: fixed;
+     top: 0;
+     left: 0;
+     height: 100vh;
+     width: 100%;
+     background: rgba(20, 39, 78, 0.98);
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     z-index: 2000;
+
+     opacity: 0;
+     transform: translateY(-20px);
+     pointer-events: none;
+     transition: opacity 0.3s ease, transform 0.3s ease;
+
+     /* Make it always flex so it can animate */
+     display: flex;
+}
+
+.mobile-menu.open {
+     opacity: 1;
+     transform: translateY(0);
+     pointer-events: all;
+}
+
+/* MOBILE MENU CONTENT */
+.menu-links a,
+.menu-links a:visited {
+     color: white;
+     font-size: 22px;
+     text-decoration: none;
+     font-weight: bold;
+     margin: 16px 0;
+     display: block;
+     text-align: center;
+}
+
+.menu-links a:hover {
+     color: #facc15;
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+     display: flex;
+}
+
+@media (max-width: 768px) {
+     .hamburger {
+          display: block;
+     }
+
+     .nav-desktop {
+          display: none;
+     }
+
+     .logo {
+          font-size: 1.5rem;
+          color: white;
+          text-decoration: none;
+          font-weight: bold;
+     }
 }
 
 iframe#webpack-dev-server-client-overlay {

@@ -18,7 +18,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <HashRouter> {/* Updated to HashRouter */}
+    <HashRouter> 
       {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}
 
       <div className={`fade-in-container ${isLoaded ? "loaded" : ""}`}>
