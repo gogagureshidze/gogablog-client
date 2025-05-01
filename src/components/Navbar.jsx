@@ -10,12 +10,12 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { darkMode, setDarkMode } = useContext(DarkModeContext);
 
-    const changeTheme = () => {
-      setDarkMode(!darkMode);
-    };
+  const changeTheme = () => {
+    setDarkMode(!darkMode);
+  };
 
   const logout = () => {
-    localStorage.clear();
+    localStorage.removeItem("user");
     setUserInfo(null);
     navigate("/login");
     setMenuOpen(false);
