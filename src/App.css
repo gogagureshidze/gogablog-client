@@ -91,8 +91,23 @@ body.dark time {
 body.dark div.editor {
      color: #f4f6f9;
 }
+/* ====== QUILL DARK MODE STYLES ====== */
 
-/* Universal fix for Quill toolbar icons in dark mode */
+/* General background and text colors */
+body.dark .ql-toolbar,
+body.dark .ql-container,
+body.dark .ql-editor {
+     background-color: #1a1a1a !important;
+     border-color: #333 !important;
+     color: white !important;
+}
+
+/* Editor placeholder text */
+body.dark .ql-editor::before {
+     color: #aaa !important;
+}
+
+/* Toolbar button icons (bold, italic, etc.) */
 body.dark .ql-toolbar button svg,
 body.dark .ql-toolbar button svg *,
 body.dark .ql-toolbar .ql-stroke,
@@ -102,28 +117,61 @@ body.dark .ql-toolbar .ql-color-label {
      color: white !important;
 }
 
-/* Fix pickers and dropdowns */
-body.dark .ql-picker-label,
-body.dark .ql-picker-item {
-     color: white !important;
+/* Toolbar buttons hover and active states */
+body.dark .ql-toolbar button:hover,
+body.dark .ql-toolbar button:focus,
+body.dark .ql-toolbar button.ql-active {
+     background-color: #333 !important;
+     border-color: #555 !important;
 }
 
-/* Optional: fix dropdown arrow icon */
+/* Toolbar pickers and labels (e.g. font, size, header) */
 body.dark .ql-picker {
      color: white !important;
 }
 
-/* Optional: fix editor and toolbar backgrounds */
-body.dark .ql-toolbar,
-body.dark .ql-container,
-body.dark .ql-editor {
-     background-color: #1a1a1a !important;
-     border-color: #333 !important;
+body.dark .ql-picker-label {
+     color: white !important;
+     border-color: #444 !important;
+}
+
+body.dark .ql-picker-label:hover {
+     background-color: #333 !important;
+}
+
+body.dark .ql-picker-label::after {
+     border-top-color: white !important;
+}
+
+/* Dropdown menu */
+body.dark .ql-picker-options {
+     background-color: #2a2a2a !important;
+     border: 1px solid #444 !important;
+}
+
+/* Dropdown items */
+body.dark .ql-picker-item {
      color: white !important;
 }
 
+body.dark .ql-picker-item:hover,
+body.dark .ql-picker-item.ql-selected {
+     background-color: #444 !important;
+     color: #FACC15 !important;
+}
 
+/* Tooltip (e.g. link, formula) */
+body.dark .ql-tooltip {
+     background-color: #2a2a2a !important;
+     color: white !important;
+     border: 1px solid #444 !important;
+}
 
+body.dark .ql-tooltip input {
+     background-color: #1a1a1a !important;
+     color: white !important;
+     border-color: #444 !important;
+}
 body.dark div input {
      background-color: #e8f0fe;
 }
