@@ -75,7 +75,7 @@ body.dark div textarea {
 }
 
 body.dark h4 {
-     color: rgb(255, 255, 255) !important;
+     color: rgb(255, 255, 255) ;
 }
 
 body.dark h6 {

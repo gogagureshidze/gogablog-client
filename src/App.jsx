@@ -12,13 +12,15 @@ import { UserContext } from "./context/userContext";
 import React, { useContext, useState } from "react";
 import { LoadingScreen } from "./components/LoadingScreen";
 import ResetPassword from "./pages/ResetPassword";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
 
 function App() {
   const { userInfo } = useContext(UserContext);
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <HashRouter> 
+    <HashRouter>
       {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}
 
       <div className={`fade-in-container ${isLoaded ? "loaded" : ""}`}>
@@ -30,13 +32,16 @@ function App() {
           <Route path="/post/:id" element={<PostPage />} />
           <Route path="/edit/:id" element={<EditPost />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+
           <Route
             path="/api/reset-password/:userId/:token"
             element={<ResetPassword />}
           />
         </Routes>
       </div>
-    </HashRouter> 
+    </HashRouter>
   );
 }
 
