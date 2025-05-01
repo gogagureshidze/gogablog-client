@@ -211,9 +211,9 @@ const AboutPage = () => {
                   color: darkMode ? "#f5f5f5" : "#444",
                 }}
               >
-                My girlfriend brought the kind of warmth and glow that no code
-                could ever generate. Appreciate her for all the unconditional
-                support and Love.
+                My girlfriend brought the kind of warmth and glow that turned
+                late-night bugs into cozy memories ❤️‍🔥. Appreciate her for all
+                the unconditional support and Love...
               </Typography>
             </Box>
 
@@ -222,7 +222,7 @@ const AboutPage = () => {
               sx={{
                 fontSize: "1.2rem",
                 color: darkMode ? "#f5f5f5" : "#333",
-                margin: '50px 0',
+                margin: "50px 0",
                 lineHeight: 1.6,
                 textAlign: "center",
               }}
