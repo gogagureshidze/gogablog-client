@@ -219,6 +219,63 @@ const AboutPage = () => {
 
             <Typography
               variant="body1"
+              sx={{
+                fontSize: "1.2rem",
+                color: darkMode ? "#f5f5f5" : "#333",
+                margin: '50px 0',
+                lineHeight: 1.6,
+                textAlign: "center",
+              }}
+            >
+              <span style={{ color: "#9575cd" }}>
+                🌙 From late-night coding sessions
+              </span>{" "}
+              to <span style={{ color: "#fdd835" }}>😄 countless laughs</span>{" "}
+              shared in the comment section, this blog is more than just a{" "}
+              <span style={{ color: "#4dd0e1", fontWeight: "bold" }}>
+                portfolio piece
+              </span>{" "}
+              — it’s a reflection of my{" "}
+              <span style={{ color: "#f06292", fontWeight: "bold" }}>
+                passion
+              </span>
+              ,{" "}
+              <span style={{ color: "#4caf50", fontWeight: "bold" }}>
+                growth
+              </span>
+              , and the{" "}
+              <span style={{ color: "#ff7043", fontWeight: "bold" }}>
+                memories
+              </span>{" "}
+              I’ve built with the people who made it feel{" "}
+              <span style={{ color: "#29b6f6", fontWeight: "bold" }}>
+                alive
+              </span>
+              .
+              <br />
+              I’m genuinely{" "}
+              <span style={{ color: "#81c784", fontWeight: "bold" }}>
+                grateful
+              </span>{" "}
+              for that... This space holds our{" "}
+              <span style={{ color: "#ffb300" }}>inside jokes</span>,{" "}
+              <span style={{ color: "#7986cb" }}>shared interests</span>, and
+              all the{" "}
+              <span style={{ color: "#ce93d8", fontWeight: "bold" }}>
+                little moments
+              </span>{" "}
+              that turned lines of code into{" "}
+              <span style={{ color: "#f48fb1" }}>something meaningful ✨</span>.
+              <br />
+              It’s more than just a project — it’s{" "}
+              <span style={{ color: "#00e5ff", fontWeight: "bold" }}>
+                a piece of my story
+              </span>
+              .
+            </Typography>
+
+            <Typography
+              variant="body1"
               mt={4}
               sx={{
                 color: darkMode ? "#f5f5f5" : "#222",
