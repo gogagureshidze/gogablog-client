@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 
-export const checkTokenExpiry = (token, logoutCallback) => {
+const checkTokenExpiry = (token, logoutCallback) => {
   try {
     const decoded = jwtDecode(token);
     const expiry = decoded.exp * 1000; // JWT exp is in seconds
@@ -19,7 +19,7 @@ export const checkTokenExpiry = (token, logoutCallback) => {
     }
   } catch (err) {
     console.error("Invalid token:", err.message);
-    // DON'T logout immediately unless you're sure
   }
 };
 
+export default checkTokenExpiry;
