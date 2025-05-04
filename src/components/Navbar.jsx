@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import MobileMenu from "./MobileMenu";
 import { DarkModeContext } from "../context/DarkModeContext";
-import { checkTokenExpiry } from "../util/checkTokenExpiry"; // adjust path as needed
+import checkTokenExpiry from "../util/checkTokenExpiry"; // adjust path as needed
 
 function Navbar() {
   const { setUserInfo, userInfo } = useContext(UserContext);
@@ -37,7 +37,7 @@ function Navbar() {
         }
       } catch (err) {
         console.error("Failed to parse stored user:", err);
-         logout();
+        logout();
       }
     }
   }, []);
