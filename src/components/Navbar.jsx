@@ -1,8 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import MobileMenu from "./MobileMenu";
 import { DarkModeContext } from "../context/DarkModeContext";
+import { checkTokenExpiry } from "../util/checkTokenExpiry"; // adjust path as needed
 
 function Navbar() {
   const { setUserInfo, userInfo } = useContext(UserContext);
@@ -20,6 +21,26 @@ function Navbar() {
     navigate("/login");
     setMenuOpen(false);
   };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        const token = parsedUser?.token;
+
+        if (token) {
+          checkTokenExpiry(token, logout);
+        } else {
+          console.warn("No token found in stored user.");
+        }
+      } catch (err) {
+        console.error("Failed to parse stored user:", err);
+         logout();
+      }
+    }
+  }, []);
 
   return (
     <>

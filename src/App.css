@@ -83,6 +83,7 @@ body.dark h6 {
 
 }
 
+
 body.dark time {
      color: rgba(255, 255, 255, 0.68) !important;
 
@@ -644,7 +645,16 @@ form span.delete {
      opacity: 0.8;
 }
 
+.loading-subtext {
+     font-size: 1rem;
+     margin-top: 0.5rem;
+     margin-bottom: 2rem;
+     text-align: center;
+     color: #FF4500;
 
+}.loading-text-wrapper {
+     max-width: 300px;
+}
 .loading-container {
      position: fixed;
      inset: 0;

@@ -206,7 +206,7 @@ const { darkMode } = useContext(DarkModeContext);
                     ? "red"
                     : postInfo.author?.username === "Nippleman"
                     ? "green"
-                    : "inherit",
+                    : '#888',
                 fontWeight:
                   postInfo.author?.username === "goga" ||
                   postInfo.author?.username === "Nippleman"
