@@ -30,8 +30,8 @@ const handleReset = async (e) => {
 
   try {
     const response = await axios.post(
-      "https://gogablog-api.onrender.com/api/user/forgotPassword",
-      { email }
+      `${process.env.REACT_APP_SERVER_URL}api/user/forgotPassword`,
+      { email },
     );
 
     if (response.status === 200) {

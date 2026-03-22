@@ -35,10 +35,10 @@ function ResetPassword() {
     const validateToken = async () => {
       try {
         const response = await axios.post(
-          "https://gogablog-api.onrender.com/api/user/validate",
+          `${process.env.REACT_APP_SERVER_URL}api/user/validate`,
           {
             token,
-          }
+          },
         );
         if (response.data.success) {
           setIsValidToken(true);
@@ -70,12 +70,12 @@ function ResetPassword() {
 
     try {
       const response = await axios.post(
-        "https://gogablog-api.onrender.com/api/user/reset",
+        `${process.env.REACT_APP_SERVER_URL}api/user/reset`,
         {
           password,
           userId,
           token,
-        }
+        },
       );
 
       if (response.status === 200) {

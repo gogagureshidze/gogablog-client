@@ -28,7 +28,7 @@ function Home() {
   }, [userInfo]);
 
   useEffect(() => {
-    fetch("https://gogablog-api.onrender.com/api/post")
+    fetch(`${process.env.REACT_APP_SERVER_URL}api/post`)
       .then((response) => response.json())
       .then((posts) => {
         setPosts(posts);

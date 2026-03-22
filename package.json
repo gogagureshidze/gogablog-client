@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "homepage": "https://gogagureshidze.github.io/gogablog-client",
-  "proxy": "https://gogablog-api.onrender.com",
+   "proxy": "http://localhost:5500",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -61,3 +61,5 @@
     "gh-pages": "^6.3.0"
   }
 }
+
+

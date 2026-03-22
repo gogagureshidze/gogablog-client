@@ -29,13 +29,16 @@ export default function CreatePost() {
     data.set("content", content);
     data.set("file", files[0]);
 
-    const response = await fetch("https://gogablog-api.onrender.com/api/post", {
-      method: "POST",
-      body: data,
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+    const response = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}api/post`,
+      {
+        method: "POST",
+        body: data,
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
       },
-    });
+    );
 
     if (response.ok) {
       setRedirect(true);

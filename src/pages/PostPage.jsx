@@ -48,7 +48,7 @@ const { darkMode } = useContext(DarkModeContext);
   const fetchPost = async () => {
     try {
       const response = await fetch(
-        `https://gogablog-api.onrender.com/api/post/${id}`
+        `${process.env.REACT_APP_SERVER_URL}api/post/${id}`,
       );
       const postData = await response.json();
       setPostInfo(postData);
@@ -63,7 +63,7 @@ const { darkMode } = useContext(DarkModeContext);
     setLoadingComments(true);
     try {
       const response = await fetch(
-        `https://gogablog-api.onrender.com/api/post/${id}`
+        `${process.env.REACT_APP_SERVER_URL}api/post/${id}`,
       );
       const postData = await response.json();
       setComments(postData.comments || []);
@@ -80,12 +80,12 @@ const { darkMode } = useContext(DarkModeContext);
     setAddingCommentLoading(true);
     try {
       const response = await fetch(
-        `https://gogablog-api.onrender.com/api/post/${id}/comment`,
+        `${process.env.REACT_APP_SERVER_URL}api/post/${id}/comment`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, text: commentText }),
-        }
+        },
       );
       if (response.ok) {
         setCommentText("");
@@ -102,10 +102,10 @@ const { darkMode } = useContext(DarkModeContext);
     setDeletingCommentLoadingId(commentId);
     try {
       const response = await fetch(
-        `https://gogablog-api.onrender.com/api/post/${id}/comment/${commentId}`,
+        `${process.env.REACT_APP_SERVER_URL}api/post/${id}/comment/${commentId}`,
         {
           method: "DELETE",
-        }
+        },
       );
       if (response.ok) {
         await fetchComments();
@@ -131,12 +131,12 @@ const { darkMode } = useContext(DarkModeContext);
     setSavingCommentLoadingId(commentId);
     try {
       const response = await fetch(
-        `https://gogablog-api.onrender.com/api/post/${id}/comment/${commentId}`,
+        `${process.env.REACT_APP_SERVER_URL}api/post/${id}/comment/${commentId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: editingText }),
-        }
+        },
       );
       if (response.ok) {
         await fetchComments();
@@ -166,14 +166,14 @@ const { darkMode } = useContext(DarkModeContext);
 
     try {
       const response = await fetch(
-        `https://gogablog-api.onrender.com/api/post/${id}`,
+        `${process.env.REACT_APP_SERVER_URL}api/post/${id}`,
         {
           method: "DELETE",
           credentials: "include",
           headers: {
             Authorization: `Bearer ${userInfo.token}`,
           },
-        }
+        },
       );
       if (response.ok) {
         navigate("/#");

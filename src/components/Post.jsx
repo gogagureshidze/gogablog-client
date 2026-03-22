@@ -2,24 +2,23 @@ import { formatISO9075 } from "date-fns";
 import { Link } from "react-router-dom";
 
 function Post({ _id, title, summary, cover, createdAt, author }) {
+  // safely get username
+  const username = author?.username;
 
-  let authorClass = "";
+  let authorClass = "author";
 
-if(author.username === 'goga') {
-  authorClass = "author admin-goga"
-}
-if (author.username === "Nippleman") {
-  authorClass = "author admin";
-}
-
-
+  if (username === "goga") {
+    authorClass += " admin-goga";
+  } else if (username === "Nippleman") {
+    authorClass += " admin";
+  }
 
   return (
     <div className="post-wrapper">
       <div className="post">
         <div className="image">
           <Link to={`/post/${_id}`}>
-            <img src={cover ? "" + cover : ""} alt={title} />
+            <img src={cover || ""} alt={title} />
           </Link>
         </div>
 
@@ -27,14 +26,15 @@ if (author.username === "Nippleman") {
           <Link to={`/post/${_id}`}>
             <h2>{title}</h2>
           </Link>
+
           <p className="info">
-            <span className={authorClass}>
-              {author?.username || "Unknown author"}
-            </span>
+            <span className={authorClass}>{username || "Unknown author"}</span>
+
             <time className="info-time">
-              {formatISO9075(new Date(createdAt), "MMM d, yyyy HH:mm")}
+              {createdAt ? formatISO9075(new Date(createdAt)) : ""}
             </time>
           </p>
+
           <p className="summary">{summary}</p>
         </div>
       </div>

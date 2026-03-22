@@ -30,6 +30,7 @@ function Login() {
   const { setUserInfo } = useContext(UserContext);
 
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
+  console.log(process.env.REACT_APP_SERVER_URL)
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -38,8 +39,8 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "https://gogablog-api.onrender.com/api/user/login",
-        { email, password }
+        `${process.env.REACT_APP_SERVER_URL}api/user/login`,
+        { email, password },
       );
 
       if (response.status === 200) {

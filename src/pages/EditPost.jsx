@@ -26,7 +26,7 @@ function EditPost() {
 
 
   useEffect(() => {
-    fetch("https://gogablog-api.onrender.com/api/post/" + id).then(
+    fetch(`${process.env.REACT_APP_SERVER_URL}api/post/${id}`).then(
       (response) => {
         response.json().then((postInfo) => {
           setTitle(postInfo.title);
@@ -34,7 +34,7 @@ function EditPost() {
           setContent(postInfo.content);
           setLoading(false);
         });
-      }
+      },
     );
   }, [id]);
 
@@ -62,15 +62,14 @@ function EditPost() {
     }
 
     const response = await fetch(
-      "https://gogablog-api.onrender.com/api/post/",
+      `${process.env.REACT_APP_SERVER_URL}api/post`,
       {
         method: "PUT",
         body: data,
-        credentials: "include",
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -90,14 +89,13 @@ function EditPost() {
     setCircularLoadingDelete(true);
 
     const response = await fetch(
-      `https://gogablog-api.onrender.com/api/post/${id}`,
+      `${process.env.REACT_APP_SERVER_URL}api/post/${id}`,
       {
         method: "DELETE",
-        credentials: "include",
         headers: {
           Authorization: `Bearer ${userInfo.token}`,
         },
-      }
+      },
     );
 
     if (response.ok) {

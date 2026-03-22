@@ -20,9 +20,14 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <HashRouter>
+    <HashRouter
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
+      {" "}
       {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}
-
       <div className={`fade-in-container ${isLoaded ? "loaded" : ""}`}>
         <Routes>
           <Route path="/" element={userInfo ? <Home /> : <Register />} />

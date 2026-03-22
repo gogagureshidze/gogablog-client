@@ -38,9 +38,9 @@ function Register() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://gogablog-api.onrender.com/api/user/register",
+        `${process.env.REACT_APP_SERVER_URL}api/user/register`,
         { username, email, password },
-        { withCredentials: true }
+       
       );
 
       if (response.status === 201) {
