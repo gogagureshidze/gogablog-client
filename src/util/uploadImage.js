@@ -1,22 +1,20 @@
-
-const API_BASE = process.env.REACT_APP_SERVER_URL || "http://localhost:5500";
+// src/utils/uploadImage.js
 
 /**
- * 1. Ask your server for a short-lived signed upload signature.
- * 2. POST the image file directly to Cloudinary from the browser.
- * 3. Return the secure Cloudinary URL.
+ * Uploads an image directly from the browser to Cloudinary.
+ * Your server only provides a signature — it never receives the image bytes.
  *
- * Your server never receives the image bytes — it only signs the request.
- * This is why uploads are now instant regardless of VPS location.
- *
- * @param {File}   file   - The File object from an <input type="file"> element
- * @param {string} token  - JWT auth token (same one you use for other API calls)
- * @param {function} [onProgress] - Optional callback(percent 0–100) for a progress bar
- * @returns {Promise<string>} Cloudinary secure_url
+ * @param {File}      file        - File from <input type="file">
+ * @param {string}    token       - JWT from userInfo.token
+ * @param {function}  onProgress  - optional (percent: 0–100) => void
+ * @returns {Promise<string>}       Cloudinary https:// URL
  */
 export async function uploadImage(file, token, onProgress) {
-  // ── Step 1: get signature from your server (fast, no image involved) ────────
-  const sigRes = await fetch(`${API_BASE}api/upload-signature`, {
+  // Strip trailing slash so we never get double-slash URLs
+  const base = (process.env.REACT_APP_SERVER_URL || "").replace(/\/$/, "");
+
+  // ── Step 1: get a short-lived signature from your server ───────────────────
+  const sigRes = await fetch(`${base}/api/upload-signature`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -26,54 +24,47 @@ export async function uploadImage(file, token, onProgress) {
 
   if (!sigRes.ok) {
     const err = await sigRes.json().catch(() => ({}));
-    throw new Error(err.error || "Failed to get upload signature");
+    throw new Error(err.error || `Signature request failed: ${sigRes.status}`);
   }
 
   const { signature, timestamp, folder, api_key, cloud_name } =
     await sigRes.json();
 
-  // ── Step 2: upload directly from browser to Cloudinary ──────────────────────
+  // ── Step 2: upload directly from browser → Cloudinary ─────────────────────
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("signature", signature);
-  formData.append("timestamp", timestamp);
-  formData.append("folder", folder);
   formData.append("api_key", api_key);
+  formData.append("timestamp", timestamp);
+  formData.append("signature", signature);
+  formData.append("folder", folder);
 
-  // Use XMLHttpRequest if you want an upload progress bar, otherwise fetch works too
   const cloudUrl = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
+  console.log("From Server:", { api_key, cloud_name, signature }); // <-- ADD THIS
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", cloudUrl);
 
-  if (onProgress) {
-    // XHR path — gives real upload progress
-    const url = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open("POST", cloudUrl);
+    xhr.upload.onprogress = (e) => {
+      if (onProgress && e.lengthComputable) {
+        onProgress(Math.round((e.loaded / e.total) * 100));
+      }
+    };
 
-      xhr.upload.onprogress = (e) => {
-        if (e.lengthComputable) {
-          onProgress(Math.round((e.loaded / e.total) * 100));
-        }
-      };
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        const data = JSON.parse(xhr.responseText);
+        resolve(data.secure_url);
+      } else {
+        console.error("Cloudinary error response:", xhr.responseText);
+        reject(new Error(`Cloudinary upload failed with status ${xhr.status}`));
+      }
+    };
 
-      xhr.onload = () => {
-        if (xhr.status >= 200 && xhr.status < 300) {
-          const data = JSON.parse(xhr.responseText);
-          resolve(data.secure_url);
-        } else {
-          reject(new Error(`Cloudinary upload failed: ${xhr.status}`));
-        }
-      };
+    xhr.onerror = () => {
+      console.error("Cloudinary XHR network error");
+      reject(new Error("Network error during upload"));
+    };
 
-      xhr.onerror = () => reject(new Error("Network error during upload"));
-      xhr.send(formData);
-    });
-    return url;
-  }
-
-  // Fetch path — simpler, no progress bar
-  const uploadRes = await fetch(cloudUrl, { method: "POST", body: formData });
-  if (!uploadRes.ok)
-    throw new Error(`Cloudinary upload failed: ${uploadRes.status}`);
-  const data = await uploadRes.json();
-  return data.secure_url;
+    xhr.send(formData);
+  });
 }

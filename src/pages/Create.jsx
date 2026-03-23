@@ -4,68 +4,81 @@ import { Navigate } from "react-router-dom";
 import Editor from "../components/Editor";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Button, CircularProgress, Snackbar, Alert, LinearProgress, Typography, Box } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Snackbar,
+  Alert,
+  LinearProgress,
+  Typography,
+  Box,
+} from "@mui/material";
 import UploadIcon from "@mui/icons-material/Upload";
 import { UserContext } from "../context/userContext";
 import { uploadImage } from "../util/uploadImage";
 
 export default function CreatePost() {
-  const [snackbarOpen, setSnackbarOpen]   = useState(false);
+  const [title, setTitle] = useState("");
+  const [summary, setSummary] = useState("");
+  const [content, setContent] = useState("");
+  const [file, setFile] = useState(null);
+  const [redirect, setRedirect] = useState(false);
+  const [uploadPct, setUploadPct] = useState(0);
+  const [phase, setPhase] = useState("idle"); // idle | uploading | saving | error
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [uploadMessage, setUploadMessage] = useState("");
-  const [title, setTitle]                 = useState("");
-  const [summary, setSummary]             = useState("");
-  const [content, setContent]             = useState("");
-  const [file, setFile]                   = useState(null);
-  const [redirect, setRedirect]           = useState(false);
-
-  // Two separate loading phases so the UI stays informative
-  const [uploadPct, setUploadPct]         = useState(0);   // 0–100 during image upload
-  const [phase, setPhase]                 = useState("idle"); // idle | uploading | saving
 
   const { userInfo } = useContext(UserContext);
   const busy = phase === "uploading" || phase === "saving";
 
   async function createNewPost(ev) {
     ev.preventDefault();
+    setPhase("idle");
 
     try {
       let cover = "";
 
-      // ── Phase 1: upload image directly to Cloudinary from the browser ──────
       if (file) {
         setPhase("uploading");
         setUploadPct(0);
-        cover = await uploadImage(file, userInfo.token, (pct) => setUploadPct(pct));
+        cover = await uploadImage(file, userInfo.token, (pct) =>
+          setUploadPct(pct),
+        );
       }
 
-      // ── Phase 2: save post — tiny JSON to your server, instant ─────────────
       setPhase("saving");
-      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}api/post`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.token}`,
+      const response = await fetch(
+        `${(process.env.REACT_APP_SERVER_URL || "").replace(/\/$/, "")}/api/post`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+          body: JSON.stringify({ title, summary, content, cover }),
         },
-        body: JSON.stringify({ title, summary, content, cover }),
-      });
+      );
 
       if (response.ok) {
         setRedirect(true);
       } else {
         const err = await response.json().catch(() => ({}));
         console.error("Create post failed:", err);
-        setPhase("idle");
+        setPhase("error");
       }
     } catch (err) {
       console.error("createNewPost error:", err);
-      setPhase("idle");
+      setPhase("error");
     }
   }
 
   if (redirect) return <Navigate to={"/"} />;
 
   return (
-    <div className="page-container" style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <div
+      className="page-container"
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    >
       <Navbar />
 
       <main style={{ flex: 1 }}>
@@ -105,12 +118,11 @@ export default function CreatePost() {
               name="file-upload"
               accept="image/jpeg,image/png,image/webp,image/gif"
               type="file"
-              required
               onChange={(ev) => {
                 const f = ev.target.files[0];
                 if (f) {
                   setFile(f);
-                  setUploadMessage(`"${f.name}" ready to upload`);
+                  setUploadMessage(`"${f.name}" ready`);
                   setSnackbarOpen(true);
                 }
               }}
@@ -136,24 +148,47 @@ export default function CreatePost() {
             </Button>
           </label>
 
-          {/* Progress bar — only visible while uploading the image */}
           {phase === "uploading" && (
             <Box>
               <LinearProgress
                 variant="determinate"
                 value={uploadPct}
-                sx={{ height: 8, borderRadius: 4, backgroundColor: "#e0e0e0",
-                  "& .MuiLinearProgress-bar": { backgroundColor: "#14274E" } }}
+                sx={{
+                  height: 8,
+                  borderRadius: 4,
+                  backgroundColor: "#e0e0e0",
+                  "& .MuiLinearProgress-bar": { backgroundColor: "#14274E" },
+                }}
               />
-              <Typography variant="caption" sx={{ color: "#14274E", fontWeight: 600, mt: 0.5, display: "block" }}>
+              <Typography
+                variant="caption"
+                sx={{
+                  color: "#14274E",
+                  fontWeight: 600,
+                  mt: 0.5,
+                  display: "block",
+                }}
+              >
                 Uploading image… {uploadPct}%
               </Typography>
             </Box>
           )}
 
           {phase === "saving" && (
-            <Typography variant="caption" sx={{ color: "#14274E", fontWeight: 600 }}>
+            <Typography
+              variant="caption"
+              sx={{ color: "#14274E", fontWeight: 600 }}
+            >
               Saving post…
+            </Typography>
+          )}
+
+          {phase === "error" && (
+            <Typography
+              variant="caption"
+              sx={{ color: "red", fontWeight: 600 }}
+            >
+              Something went wrong. Check console and try again.
             </Typography>
           )}
 
@@ -170,12 +205,19 @@ export default function CreatePost() {
               backgroundColor: "#14274E",
               color: "#FFFFFF",
               transition: "all 0.3s ease",
-              "&:hover": { backgroundColor: "#FACC15", color: "#14274E", transform: "translateY(1px)", fontWeight: "900" },
+              "&:hover": {
+                backgroundColor: "#FACC15",
+                color: "#14274E",
+                transform: "translateY(1px)",
+                fontWeight: "900",
+              },
             }}
           >
-            {phase === "uploading" ? <CircularProgress size={24} sx={{ color: "#fff" }} />
-              : phase === "saving" ? <CircularProgress size={24} sx={{ color: "#fff" }} />
-              : "Create Post"}
+            {busy ? (
+              <CircularProgress size={24} sx={{ color: "#fff" }} />
+            ) : (
+              "Create Post"
+            )}
           </Button>
         </form>
 
@@ -185,8 +227,12 @@ export default function CreatePost() {
           onClose={() => setSnackbarOpen(false)}
           anchorOrigin={{ vertical: "center", horizontal: "center" }}
         >
-          <Alert onClose={() => setSnackbarOpen(false)} severity="success" variant="filled"
-            sx={{ width: "100%", fontSize: "1.1rem", py: 2, px: 4 }}>
+          <Alert
+            onClose={() => setSnackbarOpen(false)}
+            severity="success"
+            variant="filled"
+            sx={{ width: "100%", fontSize: "1.1rem", py: 2, px: 4 }}
+          >
             {uploadMessage}
           </Alert>
         </Snackbar>

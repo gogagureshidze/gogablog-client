@@ -28,17 +28,17 @@ function EditPost() {
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [uploadPct, setUploadPct] = useState(0);
+  const [phase, setPhase] = useState("idle"); // idle | uploading | saving | error
+  const [phaseDelete, setPhaseDelete] = useState("idle");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [uploadMessage, setUploadMessage] = useState("");
 
-  // Two separate loading phases so the UI stays informative
-  const [uploadPct, setUploadPct] = useState(0);
-  const [phase, setPhase] = useState("idle"); // idle | uploading | saving
-  const [phaseDelete, setPhaseDelete] = useState("idle"); // idle | deleting
   const busy = phase === "uploading" || phase === "saving";
+  const base = (process.env.REACT_APP_SERVER_URL || "").replace(/\/$/, "");
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}api/post/${id}`)
+    fetch(`${base}/api/post/${id}`)
       .then((res) => res.json())
       .then((postInfo) => {
         setTitle(postInfo.title);
@@ -55,9 +55,8 @@ function EditPost() {
     setError("");
 
     try {
-      let cover = undefined; // undefined = don't touch existing cover
+      let cover = undefined;
 
-      // ── Phase 1: upload new image directly to Cloudinary (if changed) ──────
       if (file) {
         setPhase("uploading");
         setUploadPct(0);
@@ -66,34 +65,30 @@ function EditPost() {
         );
       }
 
-      // ── Phase 2: save post — tiny JSON to your server, instant ─────────────
       setPhase("saving");
       const body = { id, title, summary, content };
-      if (cover !== undefined) body.cover = cover; // only send if a new image was chosen
+      if (cover !== undefined) body.cover = cover;
 
-      const response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}api/post`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userInfo.token}`,
-          },
-          body: JSON.stringify(body),
+      const response = await fetch(`${base}/api/post`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
         },
-      );
+        body: JSON.stringify(body),
+      });
 
       if (response.ok) {
         navigate("/post/" + id);
       } else {
         const err = await response.json().catch(() => ({}));
-        setError(err.error || "Something went wrong, please try again.");
-        setPhase("idle");
+        setError(err.error || "Update failed, please try again.");
+        setPhase("error");
       }
     } catch (err) {
       console.error("updatePost error:", err);
       setError("Something went wrong, please try again.");
-      setPhase("idle");
+      setPhase("error");
     }
   };
 
@@ -101,13 +96,10 @@ function EditPost() {
     e.preventDefault();
     setPhaseDelete("deleting");
 
-    const response = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}api/post/${id}`,
-      {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${userInfo.token}` },
-      },
-    );
+    const response = await fetch(`${base}/api/post/${id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
 
     if (response.ok) {
       navigate("/");
@@ -159,7 +151,7 @@ function EditPost() {
                     const f = ev.target.files[0];
                     if (f) {
                       setFile(f);
-                      setUploadMessage(`"${f.name}" ready to upload`);
+                      setUploadMessage(`"${f.name}" ready`);
                       setSnackbarOpen(true);
                     }
                   }}
@@ -185,7 +177,6 @@ function EditPost() {
                 </Button>
               </label>
 
-              {/* Progress bar — only visible while uploading the image */}
               {phase === "uploading" && (
                 <Box sx={{ mt: 1 }}>
                   <LinearProgress
@@ -228,6 +219,21 @@ function EditPost() {
                 </Typography>
               )}
 
+              {(phase === "error" || error) && (
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: "red",
+                    fontWeight: 600,
+                    mt: 1,
+                    display: "block",
+                  }}
+                >
+                  {error ||
+                    "Something went wrong. Check console and try again."}
+                </Typography>
+              )}
+
               <Editor onChange={setContent} value={content} />
 
               <Button
@@ -267,8 +273,8 @@ function EditPost() {
                 sx={{
                   backgroundColor: "#850000",
                   color: "#FFFFFF",
-                  transition: "all 0.3s ease",
                   marginTop: "10px",
+                  transition: "all 0.3s ease",
                   "&:hover": {
                     backgroundColor: "#5C0000",
                     color: "#FFFFFF",
@@ -287,10 +293,6 @@ function EditPost() {
                   </span>
                 )}
               </Button>
-
-              {error && (
-                <div style={{ color: "red", marginTop: "10px" }}>{error}</div>
-              )}
             </form>
           </div>
         </div>
