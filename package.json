@@ -12,6 +12,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.8.4",
+    "browser-image-compression": "^2.0.2",
     "cloudinary": "^1.41.3",
     "date-fns": "^2.30.0",
     "emailjs-com": "^3.2.0",
@@ -59,5 +60,3 @@
     "gh-pages": "^6.3.0"
   }
 }
-
-

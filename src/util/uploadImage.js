@@ -1,8 +1,8 @@
-// src/utils/uploadImage.js
+import imageCompression from "browser-image-compression";
 
 /**
  * Uploads an image directly from the browser to Cloudinary.
- * Your server only provides a signature — it never receives the image bytes.
+ * Includes auto-compression to fix slow uploads and the 10MB limit!
  *
  * @param {File}      file        - File from <input type="file">
  * @param {string}    token       - JWT from userInfo.token
@@ -10,10 +10,33 @@
  * @returns {Promise<string>}       Cloudinary https:// URL
  */
 export async function uploadImage(file, token, onProgress) {
-  // Strip trailing slash so we never get double-slash URLs
-  const base = (process.env.REACT_APP_SERVER_URL || "").replace(/\/$/, "");
+  let finalFile = file;
+
+  // ── Step 0: Compress the image if it is bigger than 1MB ───────────────────
+  if (file.size > 1024 * 1024) {
+    console.log(
+      `Original size: ${(file.size / 1024 / 1024).toFixed(2)} MB. Compressing...`,
+    );
+
+    const options = {
+      maxSizeMB: 1, // Shrink it down to 1MB max
+      maxWidthOrHeight: 1920, // Keep it looking crisp for web
+      useWebWorker: true, // Use background processing so the site doesn't freeze
+    };
+
+    try {
+      finalFile = await imageCompression(file, options);
+      console.log(
+        `New size: ${(finalFile.size / 1024 / 1024).toFixed(2)} MB. Much faster!`,
+      );
+    } catch (error) {
+      console.error("Compression failed, trying original file...", error);
+    }
+  }
 
   // ── Step 1: get a short-lived signature from your server ───────────────────
+  const base = (process.env.REACT_APP_SERVER_URL || "").replace(/\/$/, "");
+
   const sigRes = await fetch(`${base}/api/upload-signature`, {
     method: "POST",
     headers: {
@@ -32,14 +55,14 @@ export async function uploadImage(file, token, onProgress) {
 
   // ── Step 2: upload directly from browser → Cloudinary ─────────────────────
   const formData = new FormData();
-  formData.append("file", file);
+  formData.append("file", finalFile); // <-- Notice we are sending finalFile here!
   formData.append("api_key", api_key);
   formData.append("timestamp", timestamp);
   formData.append("signature", signature);
   formData.append("folder", folder);
 
   const cloudUrl = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
-  console.log("From Server:", { api_key, cloud_name, signature }); // <-- ADD THIS
+
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", cloudUrl);
