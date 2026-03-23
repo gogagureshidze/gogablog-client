@@ -28,12 +28,27 @@ export default function CreatePost() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [uploadMessage, setUploadMessage] = useState("");
 
+  // NEW: State to hold validation errors
+  const [formError, setFormError] = useState("");
+
   const { userInfo } = useContext(UserContext);
   const busy = phase === "uploading" || phase === "saving";
 
   async function createNewPost(ev) {
     ev.preventDefault();
+    setFormError(""); // Reset error on new submission attempt
     setPhase("idle");
+
+    // NEW: Strict Validation Check
+    // We strip HTML tags from content to make sure it's not just an empty <p><br></p>
+    const cleanContent = content.replace(/(<([^>]+)>)/gi, "").trim();
+
+    if (!title.trim() || !summary.trim() || !file || !cleanContent) {
+      setFormError(
+        "All fields are required. Please ensure you have a title, summary, cover image, and content.",
+      );
+      return; // Stop the function from proceeding
+    }
 
     try {
       let cover = "";
@@ -98,7 +113,7 @@ export default function CreatePost() {
             placeholder="Title"
             value={title}
             onChange={(ev) => setTitle(ev.target.value)}
-            required
+            required // HTML validation for title
             style={{ padding: "10px", fontSize: "16px" }}
           />
 
@@ -107,7 +122,7 @@ export default function CreatePost() {
             placeholder="Summary"
             value={summary}
             onChange={(ev) => setSummary(ev.target.value)}
-            required
+            required // HTML validation for summary
             style={{ padding: "10px", fontSize: "16px" }}
           />
 
@@ -124,6 +139,7 @@ export default function CreatePost() {
                   setFile(f);
                   setUploadMessage(`"${f.name}" ready`);
                   setSnackbarOpen(true);
+                  setFormError(""); // Clear error if they fix the missing file
                 }
               }}
             />
@@ -134,8 +150,8 @@ export default function CreatePost() {
               fullWidth
               disabled={busy}
               sx={{
-                backgroundColor: "#facc15",
-                color: "#14274E",
+                backgroundColor: file ? "#4CAF50" : "#facc15", // Changes color to green when file is selected
+                color: file ? "#fff" : "#14274E",
                 fontWeight: 700,
                 py: 1.5,
                 borderRadius: "8px",
@@ -144,7 +160,7 @@ export default function CreatePost() {
                 "&:hover": { backgroundColor: "#14274E", color: "#facc15" },
               }}
             >
-              {file ? `✓ ${file.name}` : "Upload Cover Image"}
+              {file ? `✓ ${file.name}` : "Upload Cover Image *"}
             </Button>
           </label>
 
@@ -193,8 +209,24 @@ export default function CreatePost() {
           )}
 
           <div style={{ minHeight: "300px" }}>
-            <Editor value={content} onChange={setContent} />
+            <Editor
+              value={content}
+              onChange={(val) => {
+                setContent(val);
+                setFormError(""); // Clear error when typing
+              }}
+            />
           </div>
+
+          {/* NEW: Display Validation Error Message */}
+          {formError && (
+            <Typography
+              variant="body2"
+              sx={{ color: "red", fontWeight: 600, textAlign: "center" }}
+            >
+              {formError}
+            </Typography>
+          )}
 
           <Button
             type="submit"

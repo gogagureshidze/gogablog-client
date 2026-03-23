@@ -34,6 +34,9 @@ function EditPost() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [uploadMessage, setUploadMessage] = useState("");
 
+  // NEW: State to hold validation errors
+  const [formError, setFormError] = useState("");
+
   const busy = phase === "uploading" || phase === "saving";
   const base = (process.env.REACT_APP_SERVER_URL || "").replace(/\/$/, "");
 
@@ -53,6 +56,18 @@ function EditPost() {
   const updatePost = async (e) => {
     e.preventDefault();
     setError("");
+    setFormError(""); // Reset form error on submission
+
+    // NEW: Strict Validation Check
+    // We strip HTML tags from content to make sure it's not just an empty <p><br></p>
+    const cleanContent = content
+      ? content.replace(/(<([^>]+)>)/gi, "").trim()
+      : "";
+
+    if (!title.trim() || !summary.trim() || !cleanContent) {
+      setFormError("Title, summary, and content cannot be empty.");
+      return; // Stop the update process
+    }
 
     try {
       let cover = undefined;
@@ -131,13 +146,21 @@ function EditPost() {
                 type="text"
                 placeholder="Title"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                required // NEW: HTML validation
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                  setFormError(""); // Clear error when typing
+                }}
               />
               <input
                 type="text"
                 value={summary}
                 placeholder="Summary"
-                onChange={(e) => setSummary(e.target.value)}
+                required // NEW: HTML validation
+                onChange={(e) => {
+                  setSummary(e.target.value);
+                  setFormError(""); // Clear error when typing
+                }}
               />
 
               <label htmlFor="file-upload">
@@ -163,8 +186,8 @@ function EditPost() {
                   fullWidth
                   disabled={busy}
                   sx={{
-                    backgroundColor: "#facc15",
-                    color: "#14274E",
+                    backgroundColor: file ? "#4CAF50" : "#facc15", // Changes to green if they select a new file
+                    color: file ? "#fff" : "#14274E",
                     fontWeight: 700,
                     py: 1.5,
                     borderRadius: "8px",
@@ -173,7 +196,9 @@ function EditPost() {
                     "&:hover": { backgroundColor: "#14274E", color: "#facc15" },
                   }}
                 >
-                  {file ? `✓ ${file.name}` : "Upload Cover Image"}
+                  {file
+                    ? `✓ New cover: ${file.name}`
+                    : "Change Cover Image (Optional)"}
                 </Button>
               </label>
 
@@ -234,7 +259,28 @@ function EditPost() {
                 </Typography>
               )}
 
-              <Editor onChange={setContent} value={content} />
+              <Editor
+                onChange={(val) => {
+                  setContent(val);
+                  setFormError(""); // Clear error when typing
+                }}
+                value={content}
+              />
+
+              {/* NEW: Display Validation Error Message */}
+              {formError && (
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "red",
+                    fontWeight: 600,
+                    textAlign: "center",
+                    mt: 2,
+                  }}
+                >
+                  {formError}
+                </Typography>
+              )}
 
               <Button
                 type="submit"
@@ -244,7 +290,7 @@ function EditPost() {
                 sx={{
                   backgroundColor: "#14274E",
                   color: "#FFFFFF",
-                  marginTop: "20px",
+                  marginTop: formError ? "10px" : "20px", // Adjust margin based on error presence
                   transition: "all 0.3s ease",
                   "&:hover": {
                     backgroundColor: "#FACC15",
