@@ -16,7 +16,7 @@ const API_BASE = process.env.REACT_APP_SERVER_URL || "http://localhost:5500";
  */
 export async function uploadImage(file, token, onProgress) {
   // ── Step 1: get signature from your server (fast, no image involved) ────────
-  const sigRes = await fetch(`${API_BASE}/api/upload-signature`, {
+  const sigRes = await fetch(`${API_BASE}api/upload-signature`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
