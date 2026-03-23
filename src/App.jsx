@@ -1,5 +1,6 @@
 import "./App.css";
-import { HashRouter, Routes, Route } from "react-router-dom"; // Changed to HashRouter
+// Change HashRouter to BrowserRouter
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -20,13 +21,13 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <HashRouter
+    // Use BrowserRouter instead
+    <BrowserRouter
       future={{
         v7_startTransition: true,
         v7_relativeSplatPath: true,
       }}
     >
-      {" "}
       {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}
       <div className={`fade-in-container ${isLoaded ? "loaded" : ""}`}>
         <Routes>
@@ -46,11 +47,8 @@ function App() {
           />
         </Routes>
       </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
 export default App;
-
-
-//$2a$07$rpw8IvjOygKTTqmENmUtYumFVn5WZ8cZv/YtnOTBLt347akgqDTSa
