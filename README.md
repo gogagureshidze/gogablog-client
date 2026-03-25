@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+# ✍️ Goga Blog — Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the frontend repository of **Goga Blog**, a modern, full-featured blog platform designed for seamless content creation and consumption. This application provides a high-performance, responsive user interface that allows users to explore articles, engage with content, and manage their own posts in a clean, aesthetic environment.
 
-## Available Scripts
+## 🚀 Overview
 
-In the project directory, you can run:
+Goga Blog is built with a focus on user experience, offering a sleek interface for both readers and authors. It serves as the client-side interface for the Goga Blog ecosystem, communicating with a dedicated backend API to deliver real-time content updates and secure user management.
 
-### `npm start`
+**What you can do:**
+*   **Explore:** Browse a feed of recent articles with smooth loading states.
+*   **Create & Edit:** Write professional-grade blog posts using a built-in rich text editor.
+*   **Engage:** Read full articles and interact via the integrated comment system.
+*   **Personalize:** Toggle between Light and Dark modes for optimal reading comfort.
+*   **Contact:** Directly reach out to the site owner via a secure contact form.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠 Tech Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+*   **Framework:** [React](https://reactjs.org/) (v18)
+*   **Routing:** [React Router Dom](https://reactrouter.com/) (v6)
+*   **UI Components:** [Material UI (MUI)](https://mui.com/) & [Lucide React](https://lucide.dev/)
+*   **Rich Text Editor:** [React Quill](https://github.com/zenoamaro/react-quill)
+*   **API Client:** [Axios](https://axios-http.com/)
+*   **State Management:** React Context API (Auth & Theme)
+*   **Mailing Service:** [EmailJS](https://www.emailjs.com/)
+*   **Styling:** Modern CSS3 with Responsive Design
 
-### `npm test`
+## 📋 Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Before you begin, ensure you have the following installed on your local machine:
+*   **Node.js:** v14.x or higher (v18+ recommended)
+*   **npm:** v6.x or higher (or **yarn**)
+*   **Git:** To clone the repository
 
-### `npm run build`
+## ⚙️ Local Setup & Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/your-username/goga-blog-client.git
+    cd goga-blog-client
+    ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3.  **Configure Environment Variables:**
+    Create a `.env` file in the root directory (see the [Environment Variables](#environment-variables) section below).
 
-### `npm run eject`
+4.  **Start the Development Server:**
+    ```bash
+    npm start
+    ```
+    The application will be available at `http://localhost:3000`.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🔐 Environment Variables
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To connect the frontend to the backend and external services, create a `.env` file in the root directory with the following keys:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```env
+# Backend API Base URL
+REACT_APP_SERVER_URL=http://localhost:4000/
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# EmailJS Configuration (for Contact Page)
+REACT_APP_EMAILJS_SERVICE_ID=your_service_id_here
+REACT_APP_EMAILJS_TEMPLATE_ID=your_template_id_here
+REACT_APP_EMAILJS_PUBLIC_KEY=your_public_key_here
+```
 
-## Learn More
+## ✨ Key Features & Pages
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+*   **Home Page:** A dynamic feed displaying all published blog posts with pagination/infinite scroll support.
+*   **Post Details:** A dedicated view for reading full articles, featuring rich-text rendering and comment sections.
+*   **Admin Dashboard (Create/Edit):** Secured routes for authorized users to write new articles or update existing ones using the Quill editor.
+*   **Authentication:** Robust Login, Registration, and Password Recovery flows (including Forgot/Reset Password).
+*   **Contact Page:** A direct communication channel integrated with EmailJS.
+*   **User Context:** Persistent authentication state management using JWT and local storage.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📂 Project Structure
 
-### Code Splitting
+```text
+src/
+├── components/       # Reusable UI components (Navbar, Footer, Post Cards)
+├── context/          # Context providers for Auth and Dark Mode
+├── pages/            # View components for each route
+│   ├── Home.jsx      # Main landing page
+│   ├── PostPage.jsx  # Individual article view
+│   ├── Create.jsx    # Post creation interface
+│   └── ...           # Auth and static pages
+├── util/             # Utility functions (API helpers, image uploads)
+├── App.jsx           # Main App component & Route definitions
+└── index.jsx         # Application entry point
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+*Built with ❤️ by Goga Gureshidze*
