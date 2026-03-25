@@ -36,7 +36,7 @@ Before you begin, ensure you have the following installed on your local machine:
 1.  **Clone the Repository:**
     ```bash
     git clone https://github.com/gogagureshidze/gogablog-client.git
-    cd goga-blog-client
+    cd gogablog-client
     ```
 
 2.  **Install Dependencies:**
