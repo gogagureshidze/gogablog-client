@@ -12,7 +12,6 @@ import {
   FaLaptopCode,
   FaSmileBeam,
   FaUsers,
-  FaHeart,
 } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -187,35 +186,7 @@ const AboutPage = () => {
               </Typography>
             </Box>
 
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: isSmallScreen ? "column" : "row",
-                alignItems: isSmallScreen ? "center" : "flex-start",
-                textAlign: isSmallScreen ? "center" : "left",
-                mb: 3,
-              }}
-            >
-              <FaHeart
-                size={70}
-                color="#e91e63"
-                style={{
-                  marginBottom: isSmallScreen ? 8 : 0,
-                  marginRight: isSmallScreen ? 0 : 16,
-                }}
-              />
-              <Typography
-                variant="body1"
-                sx={{
-                  fontSize: "1.2rem",
-                  color: darkMode ? "#f5f5f5" : "#444",
-                }}
-              >
-                My girlfriend brought the kind of warmth and glow that turned
-                late-night bugs into cozy memories ❤️‍🔥. Appreciate her for all
-                the unconditional support and Love...
-              </Typography>
-            </Box>
+
 
             <Typography
               variant="body1"
